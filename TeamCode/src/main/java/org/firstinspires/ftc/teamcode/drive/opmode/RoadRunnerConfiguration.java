@@ -6,6 +6,7 @@ import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.teamcode.util.AxesSigns;
@@ -20,11 +21,21 @@ public class RoadRunnerConfiguration{
     public static final String MOTOR_BR = "wheelBR";
     public static final String MOTOR_BL = "wheelBL";
     public static final String DUCKY_SPINNER = "duckySpinner";
+    public static final String VERTICAL_LIFT = "verticalLift";
+    public static final String HORIZONTAL_LIFT = "horizontalLift";
+    public static final String CLAW = "claw";
+    public static final String INTAKE = "intake";
     public DcMotorEx motorFR;
     public DcMotorEx motorFL;
     public DcMotorEx motorBR;
     public DcMotorEx motorBL;
     public DcMotor duckySpinner;
+    public DcMotor verticalLift;
+    public DcMotor horizontalLift;
+    public Servo claw;
+    public Servo vertServo;
+    public Servo horiServo;
+    public DcMotor intake;
 
     HardwareMap hwMap           =  null;
 
@@ -47,6 +58,14 @@ public class RoadRunnerConfiguration{
         motorBL = hwMap.get(DcMotorEx.class, "leftRear");
 
         duckySpinner = hwMap.get(DcMotor.class, "duckySpinner");
+
+        horizontalLift = hwMap.get(DcMotor.class, "horizontalLift");
+        verticalLift = hwMap.get(DcMotor.class,"verticalLift");
+        claw = hwMap.get(Servo.class, "claw");
+        vertServo = hwMap.get(Servo.class, "vertServo");
+        horiServo = hwMap.get(Servo.class, "horiServo");
+
+        intake = hwMap.get(DcMotor.class, "intake");
 
         imu = hardwareMap.get(BNO055IMU.class, "imu");
 

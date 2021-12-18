@@ -6,20 +6,14 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-
-/**
- * This is a simple teleop routine for testing localization. Drive the robot around like a normal
- * teleop routine and make sure the robot's estimated pose matches the robot's actual pose (slight
- * errors are not out of the ordinary, especially with sudden drive motions). The goal of this
- * exercise is to ascertain whether the localizer has been configured properly (note: the pure
- * encoder localizer heading may be significantly off if the track width has not been tuned).
- */
 @TeleOp(group = "drive")
 public class Teleop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         DuckySpinner duckySpinner = new DuckySpinner(hardwareMap);
+        Lift lift = new Lift(hardwareMap);
+        Intake intake = new Intake(hardwareMap);
 
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -34,21 +28,40 @@ public class Teleop extends LinearOpMode {
                     )
             );
 
-            if(gamepad1.b) {
-                duckySpinner.setDuckySpinner(0.7);
-            }else if(gamepad1.x){
-                duckySpinner.setDuckySpinner(-0.7);
+            if (gamepad2.b) {
+                lift.openClaw();
+            }else if(gamepad2.a){
+                lift.setHoriServo(1.1);
+            }else if(gamepad2.y){
+                lift.setHoriServo(0.25);
+            }else if(gamepad2.x){
+                lift.closeClaw();
+            }else if(gamepad2.dpad_left){
+                lift.setVertServo(0.82);
+            }else if(gamepad2.dpad_right){
+                lift.setVertServo(1);
+            }else if(gamepad2.right_trigger == 1){
+                duckySpinner.setDuckySpinner(-0.6);
+            }else if(gamepad2.left_trigger == 1){
+                duckySpinner.setDuckySpinner(0.6);
+            }else if(gamepad2.dpad_up){
+                lift.setVerticalLift(1);
+            }else if(gamepad2.dpad_down){
+                lift.setVerticalLift(-1);
+            }else if(gamepad1.dpad_left){
+                lift.setHorizontalLift(-0.7);
+            }else if(gamepad1.dpad_right){
+                lift.setHorizontalLift(0.7);
+            }else if(gamepad2.left_bumper){
+                intake.setIntake(-1);
+            }else if(gamepad2.right_bumper){
+                intake.setIntake(1);
             }else{
+                lift.setHorizontalLift(0);
+                lift.setVerticalLift(0.05);
+                intake.setIntake(0);
                 duckySpinner.setDuckySpinner(0);
             }
-
-            drive.update();
-
-            Pose2d poseEstimate = drive.getPoseEstimate();
-            telemetry.addData("x", poseEstimate.getX());
-            telemetry.addData("y", poseEstimate.getY());
-            telemetry.addData("heading", poseEstimate.getHeading());
-            telemetry.update();
         }
     }
 }
