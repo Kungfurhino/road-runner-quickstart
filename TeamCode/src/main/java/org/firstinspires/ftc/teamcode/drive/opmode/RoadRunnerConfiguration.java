@@ -33,8 +33,6 @@ public class RoadRunnerConfiguration{
     public DcMotor verticalLift;
     public DcMotor horizontalLift;
     public Servo claw;
-    public Servo vertServo;
-    public Servo horiServo;
     public DcMotor intake;
 
     HardwareMap hwMap           =  null;
@@ -62,8 +60,6 @@ public class RoadRunnerConfiguration{
         horizontalLift = hwMap.get(DcMotor.class, "horizontalLift");
         verticalLift = hwMap.get(DcMotor.class,"verticalLift");
         claw = hwMap.get(Servo.class, "claw");
-        vertServo = hwMap.get(Servo.class, "vertServo");
-        horiServo = hwMap.get(Servo.class, "horiServo");
 
         intake = hwMap.get(DcMotor.class, "intake");
 

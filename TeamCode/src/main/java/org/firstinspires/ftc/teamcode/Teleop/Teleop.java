@@ -15,6 +15,8 @@ public class Teleop extends LinearOpMode {
         Lift lift = new Lift(hardwareMap);
         Intake intake = new Intake(hardwareMap);
 
+        lift.verticalLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.verticalLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         waitForStart();
@@ -31,15 +33,9 @@ public class Teleop extends LinearOpMode {
             if (gamepad2.b) {
                 lift.openClaw();
             }else if(gamepad2.a){
-                lift.setHoriServo(1.1);
-            }else if(gamepad2.y){
-                lift.setHoriServo(0.25);
+                lift.topLevel();
             }else if(gamepad2.x){
                 lift.closeClaw();
-            }else if(gamepad2.dpad_left){
-                lift.setVertServo(0.82);
-            }else if(gamepad2.dpad_right){
-                lift.setVertServo(1);
             }else if(gamepad2.right_trigger == 1){
                 duckySpinner.setDuckySpinner(-0.6);
             }else if(gamepad2.left_trigger == 1){
@@ -58,7 +54,7 @@ public class Teleop extends LinearOpMode {
                 intake.setIntake(1);
             }else{
                 lift.setHorizontalLift(0);
-                lift.setVerticalLift(0.05);
+                lift.setVerticalLift(0);
                 intake.setIntake(0);
                 duckySpinner.setDuckySpinner(0);
             }
